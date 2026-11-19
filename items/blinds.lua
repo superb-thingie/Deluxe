@@ -123,3 +123,153 @@ SMODS.Blind {
         end
     end,
 }
+SMODS.Blind {
+    key = "observer",
+    dollars = 5,
+    mult = 2,
+    atlas = 'blinds',
+    pos = { x = 0, y = 5 },
+    boss = { min = 1 },
+    config = { extra = { amp = 0.25, suit = 'Diamonds' } },
+    boss_colour = HEX("5B7FC1"),
+    loc_vars = function(self, info_queue, card)
+        return {vars = {self.config.extra.amp}}
+    end,
+    collection_loc_vars = function(self)
+        return {vars = {self.config.extra.amp}}
+    end,
+    calculate = function(self, card, context)
+		if context.individual and context.cardarea == G.play and context.other_card:is_suit(self.config.extra.suit) then
+            return {
+                amp = self.config.extra.amp
+            }
+        end
+    end
+}
+SMODS.Blind {
+    key = "boat",
+    dollars = 5,
+    mult = 2,
+    atlas = 'blinds',
+    pos = { x = 0, y = 6 },
+    boss = { min = 1 },
+    config = { extra = { amp = 0.25, suit = 'Spades' } },
+    boss_colour = HEX("373470"),
+    loc_vars = function(self, info_queue, card)
+        return {vars = {self.config.extra.amp}}
+    end,
+    collection_loc_vars = function(self)
+        return {vars = {self.config.extra.amp}}
+    end,
+    calculate = function(self, card, context)
+		if context.individual and context.cardarea == G.play and context.other_card:is_suit(self.config.extra.suit) then
+            return {
+                amp = self.config.extra.amp
+            }
+        end
+    end
+}
+SMODS.Blind {
+    key = "smile",
+    dollars = 5,
+    mult = 2,
+    atlas = 'blinds',
+    pos = { x = 0, y = 7 },
+    boss = { min = 1 },
+    config = { extra = { amp = 0.25, suit = 'Hearts' } },
+    boss_colour = HEX("3F896A"),
+    loc_vars = function(self, info_queue, card)
+        return {vars = {self.config.extra.amp}}
+    end,
+    collection_loc_vars = function(self)
+        return {vars = {self.config.extra.amp}}
+    end,
+    calculate = function(self, card, context)
+		if context.individual and context.cardarea == G.play and context.other_card:is_suit(self.config.extra.suit) then
+            return {
+                amp = self.config.extra.amp
+            }
+        end
+    end
+}
+SMODS.Blind {
+    key = "fox",
+    dollars = 5,
+    mult = 2,
+    atlas = 'blinds',
+    pos = { x = 0, y = 8 },
+    boss = { min = 1 },
+    config = { extra = { amp = 0.25, suit = 'Clubs' } },
+    boss_colour = HEX("B26F2C"),
+    loc_vars = function(self, info_queue, card)
+        return {vars = {self.config.extra.amp}}
+    end,
+    collection_loc_vars = function(self)
+        return {vars = {self.config.extra.amp}}
+    end,
+    calculate = function(self, card, context)
+		if context.individual and context.cardarea == G.play and context.other_card:is_suit(self.config.extra.suit) then
+            return {
+                amp = self.config.extra.amp
+            }
+        end
+    end
+}
+SMODS.Blind {
+    key = "laconism",
+    dollars = 5,
+    mult = 2,
+    pos = { x = 0, y = 11 },
+    atlas = 'blinds',
+    boss = { min = 5 },
+    boss_colour = HEX("B2BE36"),
+    calculate = function(self, blind, context)
+        if context.final_scoring_step then
+            local compress = ( 2 * mult * hand_chips ) / ( mult + hand_chips )
+            local equal = math.sqrt(mult * hand_chips)
+            
+            mult = mod_mult( (compress + equal) / 2 )
+            hand_chips = mod_chips( (compress + equal) / 2 )
+
+            update_hand_text({delay = 0}, {chips = hand_chips, mult = mult})
+            G.E_MANAGER:add_event(Event({
+                func = (function()
+                    local text = localize('compressed')
+                        play_sound('gong', 0.94*0.4, 0.6)
+                        play_sound('gong', 0.94*0.6, 0.4)
+                        play_sound('tarot1', 0.75)
+                        ease_colour(G.C.UI_CHIPS, HEX("B2BE36"))
+                        ease_colour(G.C.UI_MULT, HEX("B2BE36"))
+                        attention_text({
+                            scale = 1.4, text = text, hold = 2, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
+                        })
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'after',
+                            blockable = false,
+                            blocking = false,
+                            delay =  0.8,
+                            func = (function()
+                                    ease_colour(G.C.UI_CHIPS, G.C.BLUE, 0.8)
+                                    ease_colour(G.C.UI_MULT, G.C.RED, 0.8)
+                                return true
+                            end)
+                        }))
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'after',
+                            blockable = false,
+                            blocking = false,
+                            no_delete = true,
+                            delay =  1.3,
+                            func = (function()
+                                G.C.UI_CHIPS[1], G.C.UI_CHIPS[2], G.C.UI_CHIPS[3], G.C.UI_CHIPS[4] = G.C.BLUE[1], G.C.BLUE[2], G.C.BLUE[3], G.C.BLUE[4]
+                                G.C.UI_MULT[1], G.C.UI_MULT[2], G.C.UI_MULT[3], G.C.UI_MULT[4] = G.C.RED[1], G.C.RED[2], G.C.RED[3], G.C.RED[4]
+                                return true
+                            end)
+                        }))
+                        return true
+                    end)
+            }))
+            delay(0.8)
+        end
+    end
+}

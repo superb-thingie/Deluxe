@@ -4,7 +4,6 @@ SMODS.Atlas{
 	px = 71,
 	py = 95
 }
-
 SMODS.Back {
     key = "lightning",
     atlas = "backs",
@@ -60,5 +59,37 @@ SMODS.Back {
     end,
     apply = function(self, back)
         G.GAME.modifiers.scaling = (G.GAME.modifiers.scaling or 1) + 1
+    end,
+}
+
+SMODS.Back {
+    key = "luxury",
+    atlas = "backs",
+    pos = { x = 1, y = 0 },
+    apply = function(self, back)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                for i = 1, #G.playing_cards do
+                    if G.playing_cards[i]:get_id() == 14 then
+                        G.playing_cards[i]:set_ability("m_gold", nil, nil)
+                    end
+                end
+                return true
+            end
+        }))
+    end,
+}
+SMODS.Back {
+    key = "quantum",
+    atlas = "backs",
+    pos = { x = 0, y = 1 },
+    apply = function(self, back)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                if not G.HUD then return false end
+                SMODS.set_scoring_calculation('ele_quantum')
+                return true
+            end
+        }))
     end,
 }

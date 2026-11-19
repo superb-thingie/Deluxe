@@ -1,18 +1,11 @@
 return {
     descriptions = {
         Enhanced = {
-            m_ele_amp = {
-                name = "Resistant Card",
+            m_ele_div = {
+                name = "Div Card",
                 text = {
-                    "{C:mult}+#1#{} Mult",
-                    "{C:attention}+#2#{} Tax",
-                },
-            },
-            m_ele_cardboard = {
-                name = "Cardboard Card",
-                text = {
-                    "{C:green}#1# in #2#{} chance to create",
-                    " a {C:tarot}Tarot card{} when held in hand",
+                    "{C:mult}+#2#{} Mult",
+                    "{C:ele_amp}+#1#{} Tax",
                 },
             },
         },
@@ -66,6 +59,42 @@ return {
                 text = {
                     "Discard 2/3",
                     "of your deck",
+                },
+            },
+            bl_ele_observer = {
+                name = "The Observer",
+                text = {
+					'Played Diamond cards',
+					'give +#1# Tax'
+                },
+            },
+            bl_ele_boat = {
+                name = "The Boat",
+                text = {
+					'Played Spade cards',
+					'give +#1# Tax'
+                },
+            },
+            bl_ele_smile = {
+                name = "The Smile",
+                text = {
+					'Played Heart cards',
+					'give +#1# Tax',
+					':)'
+                },
+            },
+            bl_ele_fox = {
+                name = "The Fox",
+                text = {
+					'Played Club cards',
+					'give +#1# Tax'
+                },
+            },
+            bl_ele_laconism = {
+                name = "The Laconism",
+                text = {
+					'Chips and Mult are',
+					'Compressed after calculation'
                 },
             },
         },
@@ -123,8 +152,7 @@ return {
                 name = "Magnet",
                 text = {
                     "{C:chips}+#1#{} Chips and {C:mult}+#2#{} Mult",
-                    "for each {C:metal}Metal{} Card",
-                    "{C:attention}held in consumable{} area",
+                    "for each {C:attention}Steel Card{} played",
                 },
             },
             j_ele_erratic = {
@@ -233,14 +261,6 @@ return {
             },
         },
         Tarot = {
-            c_ele_resistance = {
-                name = "Resistance",
-                text = {
-                    "Enhances {C:attention}#1#{}",
-                    "selected cards to",
-                    "{C:attention}#2#s",
-                },
-            },
             c_ele_effigy = {
                 name = "Effigy",
                 text = {
@@ -260,10 +280,20 @@ return {
                     "faster for each {C:attention}Ante",
                 },
             },
-            b_ele_purple = {
-                name = "Purple Deck",
+            b_ele_luxury = {
+                name = "Luxurious Deck",
                 text = {
-                    "{X:mult,C:white}X3{} mult",
+                    "{C:attention}Ace{} cards start",
+                    "as {C:money,T:m_gold}Gold Cards",
+                },
+            },
+            b_ele_quantum = {
+                name = "Quantum Deck",
+                text = {
+                    "{C:ele_chult}Quantum{} multiplier operand",
+                    "added to scoring calculation",
+                    "all {X:chips,C:white}Xchips{} and {X:mult,C:white}Xmult{} sources",
+                    "contribute to {C:ele_chult}Quantum{} instead",
                 },
             },
         },
@@ -405,6 +435,7 @@ return {
 		scepter_up = '+X0.1',
 		equalized = 'Equalized',
 		balanced = 'Balanced',
+		compressed = 'Compressed',
 		drank = 'Drank!',
 		eaten = 'Munched!',
 		mint_loss = '+0.05 Tax -4 mult',

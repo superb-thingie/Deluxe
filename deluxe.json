@@ -1,0 +1,13 @@
+{
+  "id": "Deluxe",
+  "name": "Deluxe",
+  "display_name": "Deluxe",
+  "author": ["Superb Thing"],
+  "description": "A mod that adds a 3rd divisor called Tax.",
+  "prefix": "ele",
+  "main_file": "main.lua",
+  "priority": 420,
+  "badge_colour": "a39653",
+  "version": "0.0.0",
+  "dependencies": ["Steamodded (>=1.0.0~BETA-1221a)"]
+}

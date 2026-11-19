@@ -181,7 +181,8 @@ SMODS.Joker {
     end,
 
     calculate = function(self, card, context)
-        if context.other_consumeable and context.other_consumeable.ability.set == 'Metal' then
+        if context.individual and context.cardarea == G.play and
+            SMODS.has_enhancement(context.other_card, 'm_steel') then
             return {
                 mult = card.ability.extra.mult,
                 chips = card.ability.extra.chips
@@ -392,6 +393,64 @@ SMODS.Joker {
     end,
 }
 SMODS.Joker {
+    key = "brain",
+    blueprint_compat = true,
+    rarity = 2,
+    cost = 7,
+    atlas = 'jokers',
+    pos = { x = 2, y = 2 },
+    config = { extra = { ratio_chips = 4, ratio_mult = 1 }, },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.ratio_chips, card.ability.extra.ratio_mult } }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local balance = (mult + hand_chips) / 5
+            
+            mult = mod_mult(balance)
+            hand_chips = mod_chips(balance * 4)
+            update_hand_text({delay = 0}, {chips = hand_chips, mult = mult})
+            G.E_MANAGER:add_event(Event({
+                func = (function()
+                    play_sound('gong', 0.94, 0.3)
+                    play_sound('gong', 0.94*1.5, 0.2)
+                    play_sound('tarot1', 1.5)
+                    ease_colour(G.C.UI_CHIPS, mix_colours(G.C.PLASMA, G.C.UI_CHIPS, 0.25))
+                    ease_colour(G.C.UI_MULT, mix_colours(G.C.PLASMA, G.C.UI_MULT, 0.25))
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        blockable = false,
+                        blocking = false,
+                        delay =  0.8,
+                        func = (function()
+                                ease_colour(G.C.UI_CHIPS, G.C.BLUE, 0.8)
+                                ease_colour(G.C.UI_MULT, G.C.RED, 0.8)
+                            return true
+                        end)
+                    }))
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        blockable = false,
+                        blocking = false,
+                        no_delete = true,
+                        delay =  1.3,
+                        func = (function()
+                            G.C.UI_CHIPS[1], G.C.UI_CHIPS[2], G.C.UI_CHIPS[3], G.C.UI_CHIPS[4] = G.C.BLUE[1], G.C.BLUE[2], G.C.BLUE[3], G.C.BLUE[4]
+                            G.C.UI_MULT[1], G.C.UI_MULT[2], G.C.UI_MULT[3], G.C.UI_MULT[4] = G.C.RED[1], G.C.RED[2], G.C.RED[3], G.C.RED[4]
+                            return true
+                        end)
+                    }))
+                    return true
+                end)
+            }))
+            return {
+                message = localize('balanced'),
+                colour = G.C.PLASMA
+            }
+        end       
+    end,
+}
+SMODS.Joker {
     key = "majestic",
     blueprint_compat = true,
     rarity = 1,
@@ -514,62 +573,4 @@ SMODS.Joker {
             end
 		end
 	end,
-}
-SMODS.Joker {
-    key = "brain",
-    blueprint_compat = true,
-    rarity = 2,
-    cost = 7,
-    atlas = 'jokers',
-    pos = { x = 2, y = 2 },
-    config = { extra = { ratio_chips = 4, ratio_mult = 1 }, },
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.ratio_chips, card.ability.extra.ratio_mult } }
-    end,
-    calculate = function(self, card, context)
-        if context.joker_main then
-            local balance = (mult + hand_chips) / 5
-            
-            mult = mod_mult(balance)
-            hand_chips = mod_chips(balance * 4)
-            update_hand_text({delay = 0}, {chips = hand_chips, mult = mult})
-            G.E_MANAGER:add_event(Event({
-                func = (function()
-                    play_sound('gong', 0.94, 0.3)
-                    play_sound('gong', 0.94*1.5, 0.2)
-                    play_sound('tarot1', 1.5)
-                    ease_colour(G.C.UI_CHIPS, mix_colours(G.C.PLASMA, G.C.UI_CHIPS, 0.25))
-                    ease_colour(G.C.UI_MULT, mix_colours(G.C.PLASMA, G.C.UI_MULT, 0.25))
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        blockable = false,
-                        blocking = false,
-                        delay =  0.8,
-                        func = (function()
-                                ease_colour(G.C.UI_CHIPS, G.C.BLUE, 0.8)
-                                ease_colour(G.C.UI_MULT, G.C.RED, 0.8)
-                            return true
-                        end)
-                    }))
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        blockable = false,
-                        blocking = false,
-                        no_delete = true,
-                        delay =  1.3,
-                        func = (function()
-                            G.C.UI_CHIPS[1], G.C.UI_CHIPS[2], G.C.UI_CHIPS[3], G.C.UI_CHIPS[4] = G.C.BLUE[1], G.C.BLUE[2], G.C.BLUE[3], G.C.BLUE[4]
-                            G.C.UI_MULT[1], G.C.UI_MULT[2], G.C.UI_MULT[3], G.C.UI_MULT[4] = G.C.RED[1], G.C.RED[2], G.C.RED[3], G.C.RED[4]
-                            return true
-                        end)
-                    }))
-                    return true
-                end)
-            }))
-            return {
-                message = localize('balanced'),
-                colour = G.C.PLASMA
-            }
-        end       
-    end,
 }

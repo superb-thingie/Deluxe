@@ -1,12 +1,15 @@
-Deluxe is a mod that features multiple idea i've had, and wanted to release to you creatures. 
-The most notable adidtion is Tax, a new 3rd factor alongside chips and mult, and it divides them. as simple as it can get.
+<img width="204" height="204" alt="ele" src="https://github.com/user-attachments/assets/a2d72116-c7ad-4eb4-9afd-c9c4dd3c6aee" />
 
-<img width="242" height="121" alt="taxation" src="https://github.com/user-attachments/assets/2c5530ce-653b-4d3a-9174-7b15a17b87fb" />
-
+Electrum is a mod that tries to be vanilla+ by mostly exploring mechanics that haven't been in vanilla yet but feel like it.
+This mod adds a new consumable type called **Metal** cards! you need to hold these 
+in you consulmable area for a set amount of rounds in order to use them!
+there is also a new 3rd multiplier called **Amp** alongside chips and mult! as simple as it can get.
 # Current Features
 This mod currently adds:
-- The **Tax** mechanic.
+- The **Amp** mechanic.
+- 20 **metal** cards
 - 20 **jokers**
 - 5 **blinds** (all are **showdown blinds**)
 - the **Blaze** (and blaze flush) poker hand, which is basically 5 face cards
-- and some other misc content like tarots, enhancements etc.
+- and some other misc stuff like tarots, enhancements etc.
+<img width="271" height="76" alt="Screenshot_18" src="https://github.com/user-attachments/assets/02dd7872-4c16-44e5-a83b-5346547ad3e7" />
