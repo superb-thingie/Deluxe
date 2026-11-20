@@ -284,8 +284,8 @@ return {
                 text = {
                     "({V:1}lvl.#1#{}) Level up",
                     "{C:attention}#2#",
-                    "{C:mult}+#3#{} Mult and",
-                    "{C:chips}+#4#{} chips",
+                    "{C:chips}+#3#{} chips and",
+                    "{C:mult}+#4#{} Mult",
                 },
             },
             c_ele_proximad = {
@@ -304,7 +304,7 @@ return {
                 text = {
                     "Next base edition shop",
                     "Joker is free and",
-                    "becomes {C:dark_edition}Iridescent",
+                    "becomes {C:dark_edition}Bloom",
                 },
             },
             tag_ele_tint = {
