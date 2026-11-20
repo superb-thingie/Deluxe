@@ -139,12 +139,11 @@ return {
                     "a {C:attention}#3#",
                 },
             },
-            j_ele_cardboard_joker = {
-                name = "Cardboard Joker",
+            j_ele_capacitor = {
+                name = "Capacitor",
                 text = {
                     "Gains {C:mult}+#1#{} Mult",
-                    "for each {C:attention}Cardboard Card",
-                    "in your {C:attention}full deck",
+                    "at {C:attention}end of round",
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
                 },
             },
@@ -270,6 +269,53 @@ return {
                 },
             },
         },
+        Planet = { 
+            c_ele_proximab = {
+                name = "Proxima b",
+                text = {
+                    "({V:1}lvl.#1#{}) Level up",
+                    "{C:attention}#2#",
+                    "{C:chips}+#3#{} chips and",
+                    "{C:mult}+#4#{} Mult",
+                },
+            },
+            c_ele_proximac = {
+                name = "Proxima c",
+                text = {
+                    "({V:1}lvl.#1#{}) Level up",
+                    "{C:attention}#2#",
+                    "{C:mult}+#3#{} Mult and",
+                    "{C:chips}+#4#{} chips",
+                },
+            },
+            c_ele_proximad = {
+                name = "Proxima d",
+                text = {
+                    "({V:1}lvl.#1#{}) Level up",
+                    "{C:attention}#2#",
+                    "{C:mult}+#3#{} Mult and",
+                    "{C:chips}+#4#{} chips",
+                },
+            },
+        },
+        Tag = {
+            tag_ele_irid = {
+                name = "Iridescent Tag",
+                text = {
+                    "Next base edition shop",
+                    "Joker is free and",
+                    "becomes {C:dark_edition}Iridescent",
+                },
+            },
+            tag_ele_tint = {
+                name = "Tinted Tag",
+                text = {
+                    "Next base edition shop",
+                    "Joker is free and",
+                    "becomes {C:dark_edition}Tinted",
+                },
+            },
+        },
         Back = {
             b_ele_lightning = {
                 name = "Lightning Deck",
@@ -297,65 +343,11 @@ return {
                 },
             },
         },
-        Planet = { 
-            c_ele_proximab = {
-                name = "Proxima b",
-                text = {
-                    "({V:1}lvl.#1#{}) Level up",
-                    "{C:attention}#2#",
-                    "{C:mult}+#3#{} Mult and",
-                    "{C:chips}+#4#{} chips",
-                },
-            },
-            c_ele_proximac = {
-                name = "Proxima c",
-                text = {
-                    "({V:1}lvl.#1#{}) Level up",
-                    "{C:attention}#2#",
-                    "{C:mult}+#3#{} Mult and",
-                    "{C:chips}+#4#{} chips",
-                },
-            },
-            c_ele_proximad = {
-                name = "Proxima d",
-                text = {
-                    "({V:1}lvl.#1#{}) Level up",
-                    "{C:attention}#2#",
-                    "{C:mult}+#3#{} Mult and",
-                    "{C:chips}+#4#{} chips",
-                },
-            },
-        },
-        Tag = {
-            tag_ele_anvil = {
-                name = "Anvil Tag",
-                text = {
-                    "Gives a free",
-                    "{C:metal}Mega Mettalic Pack",
-                },
-            },
-            tag_ele_irid = {
-                name = "Iridescent Tag",
-                text = {
-                    "Next base edition shop",
-                    "Joker is free and",
-                    "becomes {C:dark_edition}Iridescent",
-                },
-            },
-            tag_ele_tint = {
-                name = "Tinted Tag",
-                text = {
-                    "Next base edition shop",
-                    "Joker is free and",
-                    "becomes {C:dark_edition}Tinted",
-                },
-            },
-        },
         Sleeve = {
             sleeve_ele_lightning = {
                 name = "Lightning Sleeve",
                 text = {
-                    "Equalize {C:mult}Mult{} and {C:chips}Chips{}",
+                    "Equalize {C:chips}Chips{} and {C:mult}Mult{}",
                     "before scoring",
                     "Required score scales",
                     "faster for each {C:attention}Ante",
@@ -364,24 +356,41 @@ return {
             sleeve_ele_lightning_alt = {
                 name = "Lightning Sleeve",
                 text = {
-                    "Equalize {C:mult}Mult{}, {C:chips}Chips{}",
-                    "and {C:attention}Tax{} before scoring",
+                    "Balance {C:chips}Chips{} and {C:mult}Mult{}",
+                    "before scoring",
                 },
             },
-            sleeve_ele_forge = {
-                name = "Luxury Sleeve",
+            sleeve_ele_luxury = {
+                name = "Luxurious Sleeve",
                 text = {
-                    "Start run with the",
-                    "{C:metal,T:v_ele_metal_merchant}#1#{} voucher",
-                    "and a copy of {C:metal,T:c_ele_copper}#2#",
+                    "{C:attention}Ace{} cards start",
+                    "as {C:money,T:m_gold}Gold Cards",
                 },
             },
-            sleeve_ele_forge_alt = {
-                name = "Luxury Sleeve",
+            sleeve_ele_luxury_alt = {
+                name = "Luxurious Sleeve",
                 text = {
-                    "Start run with the",
-                    "{C:metal,T:v_ele_metal_tycoon}#1#{} voucher",
-                    "and 2 copies of {C:metal,T:c_ele_copper}#2#",
+                    "{C:attention}King{} cards start",
+                    "as {C:attention,T:m_steel}Steel Cards",
+                },
+            },
+            sleeve_ele_quantum = {
+                name = "Quantum Sleeve",
+                text = {
+                    "{C:ele_chult}Quantum{} multiplier operand",
+                    "added to scoring calculation",
+                    "all {X:chips,C:white}Xchips{} and {X:mult,C:white}Xmult{} sources",
+                    "contribute to {C:ele_chult}Quantum{} instead",
+                },
+            },
+            sleeve_ele_quantum_alt = {
+                name = "Quantum Sleeve",
+                text = {
+                    "{C:ele_chult}Quantum{} is now",
+                    "an {C:dark_edition}exponent{} operand",
+                    "{C:attention}1%{} of {C:ele_chult}Quantum{} is contributed",
+                    "Required score scales",
+                    "faster for each {C:attention}Ante",
                 },
             },
         },

@@ -59,19 +59,19 @@ SMODS.Scoring_Parameter({
             end
         end
 })
--- SMODS.Scoring_Parameter({
---     key = 'diviser',
---     default_value = 1,
---     colour = param_colour,
--- 	flame_handler = function(self)
--- 		return {
--- 			id = 'flame_'..self.key,
--- 			arg_tab = self.key..'_flames',
---             colour = param_colour,
---             accent = param_colour,
--- 		}
--- 	end,
--- })
+SMODS.Scoring_Parameter({
+    key = 'diviser',
+    default_value = 1,
+    colour = param_colour,
+	flame_handler = function(self)
+		return {
+			id = 'flame_'..self.key,
+			arg_tab = self.key..'_flames',
+            colour = param_colour,
+            accent = param_colour,
+		}
+	end,
+})
 SMODS.Scoring_Parameter({
     key = 'chult',
     default_value = 1,
@@ -105,7 +105,23 @@ SMODS.Scoring_Parameter({
                 end
                 
                 if effect.card and effect.card ~= scored_card then juice_card(effect.card) end
-                self:modify(self.current * (amount) - self.current)
+                local calculation = G.GAME and G.GAME.current_scoring_calculation
+
+                if calculation and calculation.key == 'ele_hyper_quantum' then
+                    -- Reconstruct the original Quantum value
+                    local raw_current = 1 + (self.current - 1) * 100
+
+                    -- Apply the new multiplicative effect
+                    local raw_new = raw_current * amount
+
+                    -- Convert it back into the reduced Quantum value
+                    local reduced_new = 1 + (raw_new - 1) / 100
+
+                    self:modify(reduced_new - self.current)
+                else
+                    -- Normal Quantum behavior
+                    self:modify(self.current * amount - self.current)
+                end
                 card_eval_status_text(scored_card, 'extra', nil, percent, nil,
                     {sound = "ele_sfx_chult", 
                     message = 'X'..amount..' Quantum', 
@@ -196,7 +212,7 @@ SMODS.Scoring_Calculation{
             {n=G.UIT.R, config={align='cm', padding = -0.1}, nodes={
                 {n=G.UIT.C, config={align='cm'}, nodes={
                     SMODS.GUI.score_container({
-                        type = 'ele_amp',
+                        type = 'ele_diviser',
                         w = w * 1.5,
                         h = 0.01,
                         scale = 0
@@ -282,7 +298,92 @@ SMODS.Scoring_Calculation{
                     })
                 }}
             }},
-            {n=G.UIT.R, config={align = 'cm', padding = 0.075}, nodes={
+            {n=G.UIT.R, config={align = 'cm', padding = 0.05}, nodes={
+                {n=G.UIT.C, config={align = 'cm', id = 'hand_ele_amp'}, nodes={
+                    SMODS.GUI.score_container({
+                        type = 'ele_amp',
+                        align = 'cm',
+                        w = w * downamp,
+                        h = h * downamp,
+                        scale = scale * downamp
+                    })
+                }},
+            }},
+        }}
+    end
+}
+SMODS.Scoring_Calculation{
+    key = "hyper_quantum",
+    func = function(self, chips, mult, flames)
+	    return ((chips * mult) ^ SMODS.get_scoring_parameter(self.mod.prefix..'_chult', flames) ) / SMODS.get_scoring_parameter(self.mod.prefix..'_amp', flames) 
+	end,
+    parameters = {'chips', 'mult', SMODS.current_mod.prefix..'_chult', SMODS.current_mod.prefix..'_amp'},
+    replace_ui = function (self) 
+        local w = 1.2
+        local h = w / 2
+        local downamp = 0.9
+		local scale = 0.25
+            return
+        {n=G.UIT.R, config={align = "cm", minh = 1, padding = 0.1}, nodes={
+            {n=G.UIT.R, config={align = "cm", minh = 1, padding = 0.05}, nodes={
+                {n=G.UIT.C, config={align = "cl", id = 'hand_operator_container'}, nodes={
+                    {n=G.UIT.T, config={text = "(", scale = scale * 2, colour = SMODS.Gradients.ele_chult, shadow = true}},
+                }},
+                {n=G.UIT.C, config={align = 'cm'}, nodes = {
+                    {n=G.UIT.R, config={align = 'cm', id = 'hand_chips'}, nodes={
+                        SMODS.GUI.score_container({
+                            type = 'chips',
+                            text = 'chip_text',
+                            align = 'cr',
+                            w = w,
+                            h = h,
+                            scale = scale
+                        })
+                    }},
+                }},
+                {n=G.UIT.C, config={align = 'cm'}, nodes = { 
+                    SMODS.GUI.operator(scale)
+                }},
+                {n=G.UIT.C, config={align = 'cm'}, nodes = { 
+                    {n=G.UIT.R, config={align = 'cm', id = 'hand_mult'}, nodes={
+                        SMODS.GUI.score_container({
+                            type = 'mult',
+                            align = 'cl',
+                            w = w ,
+                            h = h,
+                            scale = scale
+                        })
+                    }},
+                }},
+                {n=G.UIT.C, config={align = "cl", id = 'hand_operator_container'}, nodes={
+                    {n=G.UIT.T, config={text = ")", scale = scale * 2, colour = SMODS.Gradients.ele_chult, shadow = true}},
+                }},
+                {n=G.UIT.C, config={align = "cl", id = 'hand_operator_container'}, nodes={
+                    {n=G.UIT.T, config={text = "^", scale = scale * 2, colour = SMODS.Gradients.ele_rainbow, shadow = true}},
+                }},
+                {n=G.UIT.C, config={align = 'cm'}, nodes = { 
+                    {n=G.UIT.R, config={align = 'cm', id = 'hand_mult'}, nodes={
+                        SMODS.GUI.score_container({
+                            type = 'ele_chult',
+                            align = 'cl',
+                            w = w ,
+                            h = h,
+                            scale = scale
+                        })
+                    }},
+                }},
+            }},
+            {n=G.UIT.R, config={align='cm', padding = -0.1}, nodes={
+                {n=G.UIT.C, config={align='cm'}, nodes={
+                    SMODS.GUI.score_container({
+                        type = 'ele_amp',
+                        w = w * 3,
+                        h = 0.01,
+                        scale = 0
+                    })
+                }}
+            }},
+            {n=G.UIT.R, config={align = 'cm', padding = 0.05}, nodes={
                 {n=G.UIT.C, config={align = 'cm', id = 'hand_ele_amp'}, nodes={
                     SMODS.GUI.score_container({
                         type = 'ele_amp',

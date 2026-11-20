@@ -84,6 +84,7 @@ SMODS.Back {
     atlas = "backs",
     pos = { x = 0, y = 1 },
     apply = function(self, back)
+    if G.GAME.selected_sleeve == "sleeve_ele_quantum" then return end
         G.E_MANAGER:add_event(Event({
             func = function()
                 if not G.HUD then return false end

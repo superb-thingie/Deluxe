@@ -119,56 +119,32 @@ SMODS.Joker {
     cost = 7,
     pos = { x = 0, y = 1 },
 	atlas = "jokers",
-    config = { extra = { mult = 2 } },
+    config = { extra = { mult_up = 2, mult = 0 } },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = G.P_CENTERS.m_ele_cardboard
-        local base_mult = (card and card.ability and card.ability.extra and card.ability.extra.mult) or self.config.extra.mult or 0
-        local cardboard_tal = 0
-        if G.playing_cards then
-            for _, playing_card in ipairs(G.playing_cards) do
-                if SMODS.has_enhancement(playing_card, 'm_ele_cardboard') then
-                    cardboard_tal = cardboard_tal + 1
-                end
-            end
-        end
-        return {
-            vars = {
-                base_mult, base_mult * cardboard_tal
-            }
-        }
+        return { vars = { card.ability.extra.mult_gain, card.ability.extra.mult } }
     end,
     calculate = function(self, card, context)
-        if context.joker_main then
-            local base_mult = (card and card.ability and card.ability.extra and card.ability.extra.mult)
-                or self.config.extra.mult or 0
-            local cardboard_tal = 0
-            if G.playing_cards then
-                for _, playing_card in ipairs(G.playing_cards) do
-                    if SMODS.has_enhancement(playing_card, 'm_ele_cardboard') then
-                        cardboard_tal = cardboard_tal + 1
-                    end
-                end
-            end
+        if context.end_of_round then
+            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
             return {
-                mult = base_mult * cardboard_tal
+                message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult_gain } },
+                colour = G.C.RED,
+                delay = 0.45
+            }
+        end
+        if context.joker_main then
+            return {
+                mult = card.ability.extra.mult
             }
         end
     end,
-    in_pool = function(self, args) 
-        for _, playing_card in ipairs(G.playing_cards or {}) do
-            if SMODS.has_enhancement(playing_card, 'm_ele_cardboard') then
-                return true
-            end
-        end
-        return false
-    end
 }
 SMODS.Joker {
     key = "magnet",
     atlas = "jokers",
     pos = { x = 1, y = 1 },
-    cost = 5,
-    rarity = 1,
+    cost = 7,
+    rarity = 2,
     config = {
         extra = {
             mult = 10,

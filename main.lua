@@ -4,6 +4,13 @@ SMODS.Atlas{
 	px = 34,
 	py = 34
 }
+SMODS.Atlas({
+  key = "balatro",
+  path = "balatro.png",
+  px = 333,
+  py = 216,
+  prefix_config = { key = false },
+})
 G.C.AMP = HEX('9C51C1')
 G.C.MINT = HEX('75A881')
 G.C.DARK_PURP = HEX('9C51C1')
