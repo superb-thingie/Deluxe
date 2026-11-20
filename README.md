@@ -7,6 +7,6 @@ The most notable adidtion is Tax, a new 3rd factor alongside chips and mult, and
 This mod currently adds:
 - The **Tax** mechanic.
 - 20 **jokers**
-- 5 **blinds** (all are **showdown blinds**)
+- 10 **blinds**
 - the **Blaze** (and blaze flush) poker hand, which is basically 5 face cards
 - and some other misc content like tarots, enhancements etc.
