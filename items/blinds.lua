@@ -139,6 +139,7 @@ SMODS.Blind {
         return {vars = {self.config.extra.amp}}
     end,
     calculate = function(self, card, context)
+        if G.GAME.blind.disabled then return end
 		if context.individual and context.cardarea == G.play and context.other_card:is_suit(self.config.extra.suit) then
             return {
                 amp = self.config.extra.amp
@@ -162,6 +163,7 @@ SMODS.Blind {
         return {vars = {self.config.extra.amp}}
     end,
     calculate = function(self, card, context)
+        if G.GAME.blind.disabled then return end
 		if context.individual and context.cardarea == G.play and context.other_card:is_suit(self.config.extra.suit) then
             return {
                 amp = self.config.extra.amp
@@ -185,6 +187,7 @@ SMODS.Blind {
         return {vars = {self.config.extra.amp}}
     end,
     calculate = function(self, card, context)
+        if G.GAME.blind.disabled then return end
 		if context.individual and context.cardarea == G.play and context.other_card:is_suit(self.config.extra.suit) then
             return {
                 amp = self.config.extra.amp
@@ -208,6 +211,7 @@ SMODS.Blind {
         return {vars = {self.config.extra.amp}}
     end,
     calculate = function(self, card, context)
+        if G.GAME.blind.disabled then return end
 		if context.individual and context.cardarea == G.play and context.other_card:is_suit(self.config.extra.suit) then
             return {
                 amp = self.config.extra.amp
@@ -224,6 +228,7 @@ SMODS.Blind {
     boss = { min = 5 },
     boss_colour = HEX("B2BE36"),
     calculate = function(self, blind, context)
+        if G.GAME.blind.disabled then return end
         if context.final_scoring_step then
             local compress = ( 2 * mult * hand_chips ) / ( mult + hand_chips )
             local equal = math.sqrt(mult * hand_chips)
