@@ -105,10 +105,9 @@ SMODS.Back {
         return { vars = { num, denom, bad_denom, self.config.extra.amp } }
     end,
 	calculate = function(self, card, context)
+        if G.GAME.selected_sleeve == "sleeve_ele_crit" then return end
 		if context.repetition and context.cardarea == G.play then
-        local hit =
-            SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck")
-			if hit then
+			if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck") then
                 return {
                     repetitions = self.config.extra.repetitions
                 },
@@ -165,10 +164,10 @@ SMODS.Back {
                     end
                 }))
             end
-        elseif context.individual and context.cardarea == G.play then
-        local fail =
-            SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_fail, "Critical Deck")
-			if fail then
+        end
+        if context.individual and context.cardarea == G.play then
+			if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_fail, "Critical Deck")
+            and not SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck") then
                 return {
                     amp = self.config.extra.amp
                 },
