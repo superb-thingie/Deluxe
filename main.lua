@@ -11,6 +11,10 @@ SMODS.Atlas({
   py = 216,
   prefix_config = { key = false },
 })
+SMODS.Sound{
+    key = "sfx_crit",
+    path = "critical_hit.ogg",
+}
 G.C.AMP = HEX('9C51C1')
 G.C.MINT = HEX('75A881')
 G.C.DARK_PURP = HEX('9C51C1')
