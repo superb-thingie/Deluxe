@@ -342,6 +342,14 @@ return {
                     "contribute to {C:ele_chult}Quantum{} instead",
                 },
             },
+            b_ele_crit = {
+                name = "Critical Deck",
+                text = {
+                    "Played {C:attention}card{} has",
+                    "a {C:green}#1# in #2#{} chance to {C:attention}retrigger{}",
+                    "or a {C:green}#1# in #3#{} chance for {C:ele_amp}+#4#{} Tax",
+                },
+            },
         },
         Sleeve = {
             sleeve_ele_lightning = {
@@ -391,6 +399,22 @@ return {
                     "{C:attention}1%{} of {C:ele_chult}Quantum{} is contributed",
                     "Required score scales",
                     "faster for each {C:attention}Ante",
+                },
+            },
+            sleeve_ele_crit = {
+                name = "Critical Sleeve",
+                text = {
+                    "Played {C:attention}card{} has",
+                    "a {C:green}#1# in #2#{} chance to {C:attention}retrigger{}",
+                    "or a {C:green}#1# in #3#{} chance for {C:ele_amp}+#4#{} Tax",
+                },
+            },
+            sleeve_ele_crit_alt = {
+                name = "Critical Sleeve",
+                text = {
+                    "Played {C:attention}card{} has",
+                    "an additional {C:green}#1# in #2#{} chance",
+                    "to {C:attention}retrigger{}",
                 },
             },
         },
@@ -450,7 +474,8 @@ return {
 		mint_loss = '+0.05 Tax -4 mult',
 		plus_tarot = '+1 Tarot',
 		oops = '+0.1 Tax',
-        k_metal_pack = "Metallic Pack",
+        crit = "Critical Hit!",
+        fail = "Critical Fail...",
         },
         poker_hand_descriptions = {
             ele_blaze = {
