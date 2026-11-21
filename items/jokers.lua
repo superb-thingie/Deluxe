@@ -516,7 +516,7 @@ SMODS.Joker {
         return { vars = { card.ability.extra.mult, card.ability.extra.amp } }
     end,
 	calculate = function(self, card, context)
-		if context.joker_main then
+		if context.individual and context.cardarea == G.play then
 			local ranks = {}
 			local unique_ranks = 0
 			for _, m in ipairs(context.scoring_hand) do
