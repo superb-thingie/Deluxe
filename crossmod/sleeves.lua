@@ -191,3 +191,166 @@ CardSleeves.Sleeve {
         end
     end,
 }
+CardSleeves.Sleeve {
+    key = "crit",
+    atlas = "sleeves",
+    pos = { x = 3, y = 0 },
+    config = { extra = { repetitions = 1, amp = 0.1, crit_chance = 3, crit_fail = 9 } },
+    loc_vars = function(self)
+        local num, denom = SMODS.get_probability_vars(self, 1, self.config.extra.crit_chance, 'ele_crit')
+        local e, bad_denom = SMODS.get_probability_vars(self, 1, self.config.extra.crit_fail, 'ele_crit')
+        local key
+        if self.get_current_deck_key() == "b_ele_crit" then
+            key = self.key .. "_alt"
+        else
+            key = self.key
+        end
+        return { key = key, vars = { num, denom, bad_denom, self.config.extra.amp } }
+    end,
+	calculate = function(self, card, context)
+        if self.get_current_deck_key() == "b_ele_crit" then
+            if context.repetition and context.cardarea == G.play then
+            local hit =
+                SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck")
+                if hit then
+                    return {
+                        repetitions = self.config.extra.repetitions
+                    },
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'immediate',
+                        func = function()
+                            G.crit_particles = Particles(1, 1, 0, 0, {
+                                timer = 0.015,
+                                scale = 0.3,
+                                initialize = true,
+                                lifespan = 1,
+                                speed = 1.1,
+                                padding = -1,
+                                attach = G.ROOM_ATTACH,
+                                colours = {
+                                    G.C.WHITE,
+                                    G.C.GOLD,
+                                    G.C.DARK_EDITION,
+                                },
+                                fill = true
+                            })
+                            G.crit_particles.fade_alpha = 1
+                            G.crit_particles:fade(0.2, 0)
+                            return true
+                        end
+                    })),
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        func = (function()
+                            local text = localize('crit')
+                                play_sound('ele_sfx_crit', 1, 0.7)
+                                play_sound('tarot1')
+                                attention_text({
+                                    scale = 1.4, text = text, hold = 2, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
+                                })
+                            return true
+                        end)
+                    })),
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        delay = 1,
+                        func = function()
+                            G.crit_particles:fade(0.5)
+                            return true
+                        end
+                    })),
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        delay = 1,
+                        func = function()
+                            G.crit_particles:remove()
+                            G.crit_particles = nil
+                            return true
+                        end
+                    }))
+                end
+            end
+        end
+        if self.get_current_deck_key() == "b_ele_crit" then
+            if context.repetition and context.cardarea == G.play then
+            local hit =
+                SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_fail, "Critical Deck")
+                if hit then
+                    return {
+                        repetitions = self.config.extra.repetitions
+                    },
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'immediate',
+                        func = function()
+                            G.crit_particles = Particles(1, 1, 0, 0, {
+                                timer = 0.015,
+                                scale = 0.3,
+                                initialize = true,
+                                lifespan = 1,
+                                speed = 1.1,
+                                padding = -1,
+                                attach = G.ROOM_ATTACH,
+                                colours = {
+                                    G.C.WHITE,
+                                    G.C.GOLD,
+                                    G.C.DARK_EDITION,
+                                },
+                                fill = true
+                            })
+                            G.crit_particles.fade_alpha = 1
+                            G.crit_particles:fade(0.2, 0)
+                            return true
+                        end
+                    })),
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        func = (function()
+                            local text = localize('crit')
+                                play_sound('ele_sfx_crit', 1, 0.7)
+                                play_sound('tarot1')
+                                attention_text({
+                                    scale = 1.4, text = text, hold = 2, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
+                                })
+                            return true
+                        end)
+                    })),
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        delay = 1,
+                        func = function()
+                            G.crit_particles:fade(0.5)
+                            return true
+                        end
+                    })),
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        delay = 1,
+                        func = function()
+                            G.crit_particles:remove()
+                            G.crit_particles = nil
+                            return true
+                        end
+                    }))
+                end
+            elseif context.individual and context.cardarea == G.play then
+            local fail =
+                SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck")
+                if fail then
+                    return {
+                        amp = self.config.extra.amp
+                    },
+                    G.E_MANAGER:add_event(Event({
+                        func = (function()
+                            local text = localize('fail')
+                                play_sound('tarot1')
+                                attention_text({
+                                    scale = 1.4, text = text, hold = 2, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
+                                })
+                            return true
+                        end)
+                    }))
+                end
+            end
+        end
+    end
+}
