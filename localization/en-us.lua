@@ -342,7 +342,7 @@ return {
                 },
             },
             b_ele_bec = {
-                name = "Quantum Deck",
+                name = "B.E.C. Deck",
                 text = {
                     "{C:inactive,s:0.5}Bose-Einstein Condensate deck",
                     "Only the maximum of {C:chips}Chips{}",
