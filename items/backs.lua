@@ -166,8 +166,8 @@ SMODS.Back {
             end
         end
         if context.individual and context.cardarea == G.play then
-			if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_fail, "Critical Deck")
-            and not SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck") then
+            if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck") then return end
+            if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_fail, "Critical Deck") then
                 return {
                     amp = self.config.extra.amp
                 },

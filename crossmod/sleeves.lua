@@ -160,9 +160,10 @@ CardSleeves.Sleeve {
     key = "crit",
     atlas = "sleeves",
     pos = { x = 3, y = 0 },
-    config = { extra = { repetitions = 1, amp = 0.1, crit_chance = 3, crit_fail = 9 } },
+    config = { extra = { repetitions = 1, repetitions_dupe = 2, amp = 0.1, crit_chance = 3, crit_dupe = 3, crit_fail = 9 } },
     loc_vars = function(self)
         local num, denom = SMODS.get_probability_vars(self, 1, self.config.extra.crit_chance, 'ele_crit')
+        local e, good_denom = SMODS.get_probability_vars(self, 1, self.config.extra.crit_dupe, 'ele_crit')
         local e, bad_denom = SMODS.get_probability_vars(self, 1, self.config.extra.crit_fail, 'ele_crit')
         local key
         if self.get_current_deck_key() == "b_ele_crit" then
@@ -170,14 +171,14 @@ CardSleeves.Sleeve {
         else
             key = self.key
         end
-        return { key = key, vars = { num, denom, bad_denom, self.config.extra.amp } }
+        return { key = key, vars = { num, denom, bad_denom, self.config.extra.amp, good_denom } }
     end,
 	calculate = function(self, card, context)
         if self.get_current_deck_key() == "b_ele_crit" then
             if context.repetition and context.cardarea == G.play then
-                if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck") then
+                if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_dupe, "Critical Deck") then
                     return {
-                        repetitions = self.config.extra.repetitions
+                        repetitions = self.config.extra.repetitions_dupe
                     },
                     G.E_MANAGER:add_event(Event({
                         trigger = 'immediate',
@@ -194,6 +195,8 @@ CardSleeves.Sleeve {
                                     G.C.WHITE,
                                     G.C.GOLD,
                                     G.C.DARK_EDITION,
+                                    G.C.RED,
+                                    G.C.BLUE,
                                 },
                                 fill = true
                             })
@@ -205,7 +208,8 @@ CardSleeves.Sleeve {
                     G.E_MANAGER:add_event(Event({
                         trigger = 'after',
                         func = (function()
-                            local text = localize('crit')
+                            local text = localize('supercrit')
+                                play_sound('multhit2', 0.5)
                                 play_sound('multhit2', 0.7)
                                 play_sound('tarot1')
                                 attention_text({
@@ -235,6 +239,7 @@ CardSleeves.Sleeve {
             end
         end
         if context.repetition and context.cardarea == G.play then
+            if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_dupe, "Critical Deck") then return end
             if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck") then
                 return {
                     repetitions = self.config.extra.repetitions
@@ -294,8 +299,9 @@ CardSleeves.Sleeve {
             end
         end
         if context.individual and context.cardarea == G.play then
-            if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_fail, "Critical Deck")
-            and not SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck") then
+            if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_dupe, "Critical Deck") then return end
+            if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck") then return end
+            if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_fail, "Critical Deck") then
                 return {
                     amp = self.config.extra.amp
                 },
