@@ -344,6 +344,7 @@ return {
             b_ele_bec = {
                 name = "Quantum Deck",
                 text = {
+                    "{C:inactive,s:0.5}Bose-Einstein Condensate deck",
                     "Only the maximum of {C:chips}Chips{}",
                     "or {C:mult}Mult{} is picked for score",
                     "Score requirement scales {C:dark_edition}linearly",
@@ -398,15 +399,16 @@ return {
                 },
             },
             sleeve_ele_bec = {
-                name = "Quantum Sleeve",
+                name = "B.E.C. Sleeve",
                 text = {
+                    "{C:inactive,s:0.5}Bose-Einstein Condensate sleeve{}",
                     "Only the maximum of {C:chips}Chips{}",
                     "or {C:mult}Mult{} is picked for score",
                     "Score requirement scales {C:dark_edition}linearly",
                 },
             },
             sleeve_ele_bec_alt = {
-                name = "Quantum Sleeve",
+                name = "B.E.C. Sleeve",
                 text = {
                     "{C:chips}Chips{} and {C:mult}Mult{} are",
                     "added instead",
