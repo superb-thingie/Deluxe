@@ -138,7 +138,7 @@ SMODS.Back {
                     trigger = 'after',
                     func = (function()
                         local text = localize('crit')
-                        play_sound('ele_sfx_crit', 1, 0.7)
+                        play_sound('multhit2', 0.7)
                         play_sound('tarot1')
                         attention_text({
                             scale = 1.4, text = text, hold = 2, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
