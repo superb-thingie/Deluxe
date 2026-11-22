@@ -79,21 +79,21 @@ SMODS.Back {
         }))
     end,
 }
-SMODS.Back {
-    key = "quantum",
-    atlas = "backs",
-    pos = { x = 0, y = 1 },
-    apply = function(self, back)
-    if G.GAME.selected_sleeve == "sleeve_ele_quantum" then return end
-        G.E_MANAGER:add_event(Event({
-            func = function()
-                if not G.HUD then return false end
-                SMODS.set_scoring_calculation('ele_quantum')
-                return true
-            end
-        }))
-    end,
-}
+-- SMODS.Back {
+--     key = "quantum",
+--     atlas = "backs",
+--     pos = { x = 0, y = 1 },
+--     apply = function(self, back)
+--     if G.GAME.selected_sleeve == "sleeve_ele_quantum" then return end
+--         G.E_MANAGER:add_event(Event({
+--             func = function()
+--                 if not G.HUD then return false end
+--                 SMODS.set_scoring_calculation('ele_quantum')
+--                 return true
+--             end
+--         }))
+--     end,
+-- }
 SMODS.Back {
     key = "crit",
     atlas = "backs",
@@ -184,4 +184,21 @@ SMODS.Back {
             end
         end
     end
+}
+SMODS.Back {
+    key = "bec",
+    atlas = "backs",
+    pos = { x = 0, y = 1 },
+    apply = function(self, back)
+    if G.GAME.selected_sleeve == "sleeve_ele_bec" then return end
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                if not G.HUD then return false end
+                SMODS.set_scoring_calculation('ele_bec')
+                play_sound('tarot1')
+                return true
+            end
+        }))
+        G.GAME.compress_scaling = true
+    end,
 }

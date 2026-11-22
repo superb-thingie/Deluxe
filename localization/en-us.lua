@@ -333,21 +333,20 @@ return {
                     "as {C:money,T:m_gold}Gold Cards",
                 },
             },
-            b_ele_quantum = {
-                name = "Quantum Deck",
-                text = {
-                    "{C:ele_chult}Quantum{} multiplier operand",
-                    "added to scoring calculation",
-                    "all {X:chips,C:white}Xchips{} and {X:mult,C:white}Xmult{} sources",
-                    "contribute to {C:ele_chult}Quantum{} instead",
-                },
-            },
             b_ele_crit = {
                 name = "Critical Deck",
                 text = {
                     "Played {C:attention}card{} has",
                     "a {C:green}#1# in #2#{} chance to {C:attention}retrigger{}",
                     "or a {C:green}#1# in #3#{} chance for {C:ele_amp}+#4#{} Tax",
+                },
+            },
+            b_ele_bec = {
+                name = "Quantum Deck",
+                text = {
+                    "Only the maximum of {C:chips}Chips{}",
+                    "or {C:mult}Mult{} is picked for score",
+                    "Score requirement scales {C:dark_edition}linearly",
                 },
             },
         },
@@ -382,25 +381,6 @@ return {
                     "as {C:attention,T:m_steel}Steel Cards",
                 },
             },
-            sleeve_ele_quantum = {
-                name = "Quantum Sleeve",
-                text = {
-                    "{C:ele_chult}Quantum{} multiplier operand",
-                    "added to scoring calculation",
-                    "all {X:chips,C:white}Xchips{} and {X:mult,C:white}Xmult{} sources",
-                    "contribute to {C:ele_chult}Quantum{} instead",
-                },
-            },
-            sleeve_ele_quantum_alt = {
-                name = "Quantum Sleeve",
-                text = {
-                    "{C:ele_chult}Quantum{} is now",
-                    "an {C:dark_edition}exponent{} operand",
-                    "{C:attention}1%{} of {C:ele_chult}Quantum{} is contributed",
-                    "Required score scales",
-                    "faster for each {C:attention}Ante",
-                },
-            },
             sleeve_ele_crit = {
                 name = "Critical Sleeve",
                 text = {
@@ -415,6 +395,21 @@ return {
                     "Played {C:attention}card{} has",
                     "an additional {C:green}#1# in #2#{} chance",
                     "to {C:attention}retrigger{}",
+                },
+            },
+            sleeve_ele_bec = {
+                name = "Quantum Sleeve",
+                text = {
+                    "Only the maximum of {C:chips}Chips{}",
+                    "or {C:mult}Mult{} is picked for score",
+                    "Score requirement scales {C:dark_edition}linearly",
+                },
+            },
+            sleeve_ele_bec_alt = {
+                name = "Quantum Sleeve",
+                text = {
+                    "{C:chips}Chips{} and {C:mult}Mult{} are",
+                    "added instead",
                 },
             },
         },

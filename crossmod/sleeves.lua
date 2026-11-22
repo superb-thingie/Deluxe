@@ -157,41 +157,6 @@ CardSleeves.Sleeve {
     end,
 }
 CardSleeves.Sleeve {
-    key = "quantum",
-    atlas = "sleeves",
-    pos = { x = 2, y = 0 },
-    loc_vars = function(self)
-        local key
-        if self.get_current_deck_key() == "b_ele_quantum" then
-            key = self.key .. "_alt"
-        else
-            key = self.key
-        end
-        return { key = key }
-    end,
-    apply = function(self, sleeve)
-        if self.get_current_deck_key() == "b_ele_quantum" then
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    if not G.HUD then return false end
-                    SMODS.set_scoring_calculation('ele_hyper_quantum')
-                    return true
-                end
-            }))
-            G.GAME.modifiers.scaling = (G.GAME.modifiers.scaling or 1) + 1
-        end
-        if not self.get_current_deck_key() == "b_ele_quantum" then
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    if not G.HUD then return false end
-                    SMODS.set_scoring_calculation('ele_quantum')
-                    return true
-                end
-            }))
-        end
-    end,
-}
-CardSleeves.Sleeve {
     key = "crit",
     atlas = "sleeves",
     pos = { x = 3, y = 0 },
@@ -347,4 +312,42 @@ CardSleeves.Sleeve {
             end
         end
     end
+}
+CardSleeves.Sleeve {
+    key = "bec",
+    atlas = "sleeves",
+    pos = { x = 2, y = 0 },
+    loc_vars = function(self)
+        local key
+        if self.get_current_deck_key() == "b_ele_bec" then
+            key = self.key .. "_alt"
+        else
+            key = self.key
+        end
+        return { key = key }
+    end,
+    apply = function(self, sleeve)
+        if self.get_current_deck_key() == "b_ele_bec" then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    if not G.HUD then return false end
+                    SMODS.set_scoring_calculation('ele_super_bec')
+                    play_sound('tarot1')
+                    return true
+                end
+            }))
+            G.GAME.compress_scaling = true
+        end
+        if not self.get_current_deck_key() == "b_ele_bec" then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    if not G.HUD then return false end
+                    SMODS.set_scoring_calculation('ele_bec')
+                    play_sound('tarot1')
+                    return true
+                end
+            }))
+            G.GAME.compress_scaling = true
+        end
+    end,
 }

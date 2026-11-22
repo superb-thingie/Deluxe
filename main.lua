@@ -61,4 +61,12 @@ if next(SMODS.find_mod("Oblivion")) then
     assert(SMODS.load_file("crossmod/oblivion.lua"))()
 end
 
+local linear_ante_scaling = get_blind_amount
+get_blind_amount = function(ante)
+    if G.GAME.compress_scaling == true then
+        return ante * 50
+    end
+    return linear_ante_scaling(ante)
+end
+
 
