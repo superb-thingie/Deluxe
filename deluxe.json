@@ -7,7 +7,7 @@
   "prefix": "ele",
   "main_file": "main.lua",
   "priority": 420,
-  "badge_colour": "a39653",
+  "badge_colour": "e0ac55",
   "version": "0.0.0",
   "dependencies": ["Steamodded (>=1.0.0~BETA-1221a)"]
 }
