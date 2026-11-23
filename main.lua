@@ -15,15 +15,12 @@ SMODS.Sound{
     key = "sfx_crit",
     path = "critical_hit.ogg",
 }
-G.C.AMP = HEX('9C51C1')
 G.C.MINT = HEX('75A881')
-G.C.DARK_PURP = HEX('9C51C1')
 G.C.PLASMA = HEX('C863D6')
 G.C.METAL = HEX('d4b79b')
 G.C.GOLD = HEX('E0AC55')
-G.C.ELEC = HEX('a59a63')
-G.C.SALT = HEX('A1B7C7')
-
+G.C.BAD_CHIPS = HEX('FF5D00')
+G.C.BAD_MULT = HEX('5BE0E5')
 SMODS.Gradient {
     key = "rainbow",
     colours = {
@@ -41,6 +38,7 @@ SMODS.Gradient {
 
 assert(SMODS.load_file("items/tax.lua"))()
 assert(SMODS.load_file("items/enhancers.lua"))()
+assert(SMODS.load_file("items/attenuators.lua"))()
 assert(SMODS.load_file("items/editions.lua"))()
 assert(SMODS.load_file("items/backs.lua"))()
 assert(SMODS.load_file("items/tarots.lua"))()

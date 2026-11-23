@@ -8,6 +8,54 @@ return {
                     "{C:ele_amp}+#1#{} Tax",
                 },
             },
+            m_ele_opposite = {
+                name = "Opposite Card",
+                text = {
+                    "{C:FF5D00}#1#{} extra chips",
+                },
+            },
+            m_ele_invert = {
+                name = "Inverted Card",
+                text = {
+                    "{C:5BE0E5}#1#{} Mult",
+                },
+            },
+            m_ele_lead = {
+                name = "Lead Card",
+                text = {
+                    "{X:mult,C:white} X#1# {} Mult",
+                    "while this card",
+                    "stays in hand",
+                },
+            },
+            m_ele_radio = {
+                name = "Radioactive Card",
+                text = {
+                    "{C:green,E:1} -0.4 probabilities {}",
+                    "while this card",
+                    "stays in hand",
+                },
+            },
+            m_ele_mag = {
+                name = "Magnetic Card",
+                text = {
+                    "{C:attention} always selected {}",
+                    "when drawn to hand",
+                },
+            },
+            m_ele_corrupt = {
+                name = "Corrupted Card",
+                text = {
+                    "",
+                },
+            },
+            m_ele_fragile = {
+                name = "Fragile Card",
+                text = {
+                    "{C:green}#1# in #2#{} chance to",
+                    "destroy card",
+                },
+            },
         },
         Edition = {
             e_ele_iridescent = {
@@ -344,7 +392,7 @@ return {
             b_ele_bec = {
                 name = "B.E.C. Deck",
                 text = {
-                    "{C:inactive,s:0.5}Bose-Einstein Condensate deck",
+                    "{C:inactive,s:0.75}Bose-Einstein Condensate deck",
                     "Only the maximum of {C:chips}Chips{}",
                     "or {C:mult}Mult{} is picked for score",
                     "Score requirement scales {C:dark_edition}linearly",
@@ -473,6 +521,7 @@ return {
 		oops = '+0.1 Tax',
         crit = "Critical Hit!",
         fail = "Critical Fail...",
+        supercrit = "Super Critical Hit!!",
         },
         poker_hand_descriptions = {
             ele_blaze = {
