@@ -363,6 +363,31 @@ return {
                     "and convert it into an {C:ele_attenuator}Attenuator",
                 },
             },
+            c_ele_invert = {
+                name = "Invert",
+                text = { 
+                    "Select up to {C:attention}#1#{} cards",
+                    "copy the {C:attention}enhancement{} of the {C:attention}rightmost{}",
+                    "into the {C:attention}rest{} of the cards",
+                    "Convert the {C:attention}rightmost{} into an {C:ele_attenuator}Attenuator"
+                },
+            },
+            c_ele_tung = {
+                name = "Tungsten Cube",
+                text = {
+                    "{C:attention}+#1#{} hand size",
+                    "Add {C:attention}#2#{} random {C:ele_attenuator}Lead{}",
+                    "cards to you hand",
+                },
+            },
+            c_ele_draw = {
+                name = "Draw +4",
+                text = {
+                    "Gain {C:money}$#1#{}",
+                    "Add {C:attention}#2#{} random {C:ele_attenuator}Attenuator{}",
+                    "cards to you hand",
+                },
+            },
         },
         Tag = {
             tag_ele_irid = {
