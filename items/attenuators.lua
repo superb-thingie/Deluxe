@@ -127,16 +127,31 @@ SMODS.Enhancement {
     key = 'fragile',
     pos = { x = 1, y = 2 },
     atlas = "attens",
-    config = { extra = { odds = 2 } },
+    config = { Xmult = 0.75, extra = { odds = 2 } },
     shatters = true,
     loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'ele_fragile')
-        return { vars = { numerator, denominator } }
+        return { vars = { card.ability.Xmult, numerator, denominator } }
     end,
     calculate = function(self, card, context)
         if context.destroy_card and context.cardarea == G.play and context.destroy_card == card and
             SMODS.pseudorandom_probability(card, 'ele_fragile', 1, card.ability.extra.odds) then
             card.glass_trigger = true
+            return { remove = true }
+        end
+    end,
+}
+SMODS.Enhancement {
+    key = 'hollow',
+    pos = { x = 2, y = 0 },
+    atlas = "attens",
+    shatters = true,
+    replace_base_card = true,
+    no_rank = true,
+    no_suit = true,
+    always_scores = true,
+    calculate = function(self, card, context)
+        if context.destroy_card and context.cardarea == G.play and context.destroy_card == card then
             return { remove = true }
         end
     end,
