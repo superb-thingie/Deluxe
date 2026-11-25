@@ -35,6 +35,15 @@ SMODS.Gradient {
     },
     cycle = 5
 }
+SMODS.Gradient {
+    key = "attenuator",
+    colours = {
+        HEX("FF5D00"),
+        HEX("5BE0E5"),
+
+    },
+    cycle = 4
+}
 
 assert(SMODS.load_file("items/tax.lua"))()
 assert(SMODS.load_file("items/enhancers.lua"))()
@@ -42,6 +51,7 @@ assert(SMODS.load_file("items/attenuators.lua"))()
 assert(SMODS.load_file("items/editions.lua"))()
 assert(SMODS.load_file("items/backs.lua"))()
 assert(SMODS.load_file("items/tarots.lua"))()
+assert(SMODS.load_file("items/spectrals.lua"))()
 assert(SMODS.load_file("items/jokers.lua"))()
 assert(SMODS.load_file("items/blinds.lua"))()
 assert(SMODS.load_file("items/poker_hands.lua"))()

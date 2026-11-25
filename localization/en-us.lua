@@ -52,8 +52,16 @@ return {
             m_ele_fragile = {
                 name = "Fragile Card",
                 text = {
-                    "{C:green}#1# in #2#{} chance to",
+                    "{X:mult,C:white}X#1#{} mult",
+                    "{C:green}#2# in #3#{} chance to",
                     "destroy card",
+                },
+            },
+            m_ele_hollow = {
+                name = "Hollow Card",
+                text = {
+                    "no rank or suit",
+                    "destroy card when played",
                 },
             },
         },
@@ -343,6 +351,16 @@ return {
                     "{C:attention}#2#",
                     "{C:mult}+#3#{} Mult and",
                     "{C:chips}+#4#{} chips",
+                },
+            },
+        },
+        Spectral = {
+            c_ele_duality = {
+                name = "Duality",
+                text = {
+                    "Add {C:dark_edition}Polychrome{} effect",
+                    "to {C:attention}#1#{} selected card in hand",
+                    "and convert it into an {C:ele_attenuator}Attenuator",
                 },
             },
         },
