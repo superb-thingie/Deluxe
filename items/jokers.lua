@@ -113,13 +113,13 @@ SMODS.Joker {
     end
 }
 SMODS.Joker {
-    key = "cardboard_joker",
+    key = "capacitor",
     blueprint_compat = true,
-    rarity = 2,
-    cost = 7,
+    rarity = 3,
+    cost = 8,
     pos = { x = 0, y = 1 },
 	atlas = "jokers",
-    config = { extra = { mult_up = 2, mult = 0 } },
+    config = { extra = { mult_gain = 2, mult = 0 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.mult_gain, card.ability.extra.mult } }
     end,
