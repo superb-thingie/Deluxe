@@ -375,7 +375,7 @@ CardSleeves.Sleeve {
         if self.get_current_deck_key() == "b_ele_ultraviolet" then
             if context.final_scoring_step then
                 local tax = SMODS.Scoring_Parameters.ele_amp
-                tax.default_value = tax.default_value + ( self.config.extra.base_tax * self.config.extra.low_factor )
+                tax.default_value = tax.default_value + ( self.config.extra.base_tax / self.config.extra.low_factor )
                 tax.current = tax.default_value
                 update_hand_text({delay = 0}, {
                     [tax.key] = tax.current
