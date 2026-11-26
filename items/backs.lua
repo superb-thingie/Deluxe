@@ -196,6 +196,7 @@ SMODS.Back {
         return { vars = { self.config.extra.cards, self.config.extra.base_tax, self.config.extra.base_tax_down } }
     end,
     calculate = function(self, back, context)
+        if G.GAME.selected_sleeve == "sleeve_ele_ultraviolet" then return end
         if context.final_scoring_step then
             local tax = SMODS.Scoring_Parameters.ele_amp
             tax.default_value = tax.default_value + self.config.extra.base_tax
