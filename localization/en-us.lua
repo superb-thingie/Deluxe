@@ -444,7 +444,7 @@ return {
             b_ele_ultraviolet = {
                 name = "Utraviolet Deck",
                 text = {
-                    "{C:ele_amp}+#2#{} base tax when hand is played",
+                    "{X:ele_amp,C:white}X#2#{} base tax when hand is played",
                     "{C:ele_attenuator}Attenuators{} give",
                     "{X:ele_amp,C:white}X#3#{} base tax when played",
                     "{C:attention}#1#{} random cards start as {C:ele_attenuator}Attenuators{}",
@@ -517,7 +517,7 @@ return {
             sleeve_ele_ultraviolet = {
                 name = "Utraviolet Sleeve",
                 text = {
-                    "{C:ele_amp}+#2#{} base tax when hand is played",
+                    "{X:ele_amp,C:white}X#2#{} base tax when hand is played",
                     "{C:ele_attenuator}Attenuators{} give",
                     "{X:ele_amp,C:white}X#3#{} base tax when played",
                     "{C:attention}#1#{} random cards start as {C:ele_attenuator}Attenuators{}",
