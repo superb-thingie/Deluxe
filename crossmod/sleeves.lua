@@ -357,3 +357,99 @@ CardSleeves.Sleeve {
         end
     end,
 }
+CardSleeves.Sleeve {
+    key = "ultraviolet",
+    atlas = "sleeves",
+    pos = { x = 4 , y = 0 },
+    config = { extra = { cards = 8, base_tax = 0.4, base_tax_down = 0.8, low_factor = 1.5 } },
+    loc_vars = function(self)
+        local key
+        if self.get_current_deck_key() == "b_ele_ultraviolet" then
+            key = self.key .. "_alt"
+        else
+            key = self.key
+        end
+        return { key = key, vars = { self.config.extra.cards, self.config.extra.base_tax, self.config.extra.base_tax_down, self.config.extra.low_factor } }
+    end,
+    calculate = function(self, back, context)
+        if self.get_current_deck_key() == "b_ele_ultraviolet" then
+            if context.final_scoring_step then
+                local tax = SMODS.Scoring_Parameters.ele_amp
+                tax.default_value = tax.default_value + ( self.config.extra.base_tax * self.config.extra.low_factor )
+                tax.current = tax.default_value
+                update_hand_text({delay = 0}, {
+                    [tax.key] = tax.current
+                })
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    func = (function()
+                        play_sound('ele_sfx_amp')
+                        return true
+                    end)
+                }))
+                G.GAME.ultraviolet_pitch_count = 0
+            end
+            if context.individual and context.cardarea == G.play and (
+                SMODS.has_enhancement(context.other_card, 'm_ele_opposite') or
+                SMODS.has_enhancement(context.other_card, 'm_ele_invert') or
+                SMODS.has_enhancement(context.other_card, 'm_ele_lead') or
+                SMODS.has_enhancement(context.other_card, 'm_ele_corrupt') or
+                SMODS.has_enhancement(context.other_card, 'm_ele_radio') or
+                SMODS.has_enhancement(context.other_card, 'm_ele_mag') or
+                SMODS.has_enhancement(context.other_card, 'm_ele_fragile') or
+                SMODS.has_enhancement(context.other_card, 'm_ele_hollow') ) then
+                
+                G.GAME.ultraviolet_pitch_count =
+                    (G.GAME.ultraviolet_pitch_count or 0) + 0.2
+                local tax = SMODS.Scoring_Parameters.ele_amp
+                tax.default_value = tax.default_value * self.config.extra.base_tax_down
+                tax.current = tax.default_value
+                update_hand_text({delay = 0}, {
+                    [tax.key] = tax.current
+                }) 
+
+                local pitch = 1 - (G.GAME.ultraviolet_pitch_count - 0.999) / (#G.play - 0.998) * 0.3
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.1,
+                    func = (function()
+                        play_sound('ele_sfx_up', pitch)
+                        return true
+                    end)
+                }))
+            end
+        end
+    end,
+    apply = function(self, back)
+        if self.get_current_deck_key() == "b_ele_ultraviolet" then
+        G.E_MANAGER:add_event(Event({
+                func = function()
+                    local pool = {}
+                    for _, card in ipairs(G.playing_cards) do
+                        pool[#pool + 1] = card
+                    end
+                    for i = 1, math.min(self.config.extra.cards, #pool) do
+                        local selected = pseudorandom_element(pool, pseudoseed('ultraviolet' .. i))
+                        local attenuator = SMODS.poll_enhancement {
+                            key = "ele_utraviolet",
+                            guaranteed = true,
+                            options = {
+                                'm_ele_opposite', 'm_ele_invert', 'm_ele_lead',
+                                'm_ele_radio', 'm_ele_mag', 'm_ele_corrupt',
+                                'm_ele_fragile',
+                            }
+                        }
+                        selected:set_ability(attenuator, nil, nil)
+                        for j, card in ipairs(pool) do
+                            if card == selected then
+                                table.remove(pool, j)
+                                break
+                            end
+                        end
+                    end
+                    return true
+                end
+            }))
+        end
+    end,
+}

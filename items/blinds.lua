@@ -155,7 +155,7 @@ SMODS.Blind {
     pos = { x = 0, y = 6 },
     boss = { min = 1 },
     config = { extra = { amp = 0.25, suit = 'Spades' } },
-    boss_colour = HEX("373470"),
+    boss_colour = HEX("DE8754"),
     loc_vars = function(self, info_queue, card)
         return {vars = {self.config.extra.amp}}
     end,
