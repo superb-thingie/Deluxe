@@ -79,21 +79,6 @@ SMODS.Back {
         }))
     end,
 }
--- SMODS.Back {
---     key = "quantum",
---     atlas = "backs",
---     pos = { x = 0, y = 1 },
---     apply = function(self, back)
---     if G.GAME.selected_sleeve == "sleeve_ele_quantum" then return end
---         G.E_MANAGER:add_event(Event({
---             func = function()
---                 if not G.HUD then return false end
---                 SMODS.set_scoring_calculation('ele_quantum')
---                 return true
---             end
---         }))
---     end,
--- }
 SMODS.Back {
     key = "crit",
     atlas = "backs",
@@ -202,3 +187,55 @@ SMODS.Back {
         G.GAME.compress_scaling = true
     end,
 }
+SMODS.Back {
+    key = "ultraviolet",
+    atlas = "backs",
+    pos = { x = 2, y = 0 },
+    calculate = function(self, back, context)
+        if context.final_scoring_step then
+            local tax = SMODS.Scoring_Parameters.ele_amp
+            tax.default_value = tax.default_value + 0.5
+            tax.current = tax.default_value
+            update_hand_text({delay = 0}, {
+                [tax.key] = tax.current
+            })
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                func = (function()
+                    play_sound('ele_sfx_amp')
+                    return true
+                end)
+            }))
+        end
+        if context.individual and context.cardarea == G.play and (
+            SMODS.has_enhancement(context.other_card, 'm_ele_opposite') or
+            SMODS.has_enhancement(context.other_card, 'm_ele_invert') or
+            SMODS.has_enhancement(context.other_card, 'm_ele_lead') or
+            SMODS.has_enhancement(context.other_card, 'm_ele_corrupt') or
+            SMODS.has_enhancement(context.other_card, 'm_ele_radio') or
+            SMODS.has_enhancement(context.other_card, 'm_ele_mag') or
+            SMODS.has_enhancement(context.other_card, 'm_ele_fragile') or
+            SMODS.has_enhancement(context.other_card, 'm_ele_hollow') ) then
+            
+            G.GAME.ultraviolet_pitch_count =
+                (G.GAME.ultraviolet_pitch_count or 0) + 0.2
+            local tax = SMODS.Scoring_Parameters.ele_amp
+            tax.default_value = tax.default_value * 0.8
+            tax.current = tax.default_value
+            update_hand_text({delay = 0}, {
+                [tax.key] = tax.current
+            }) 
+
+            local pitch = 1 - (G.GAME.ultraviolet_pitch_count - 0.999) / (#G.play - 0.998) * 0.3
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.1,
+                func = (function()
+                    play_sound('ele_sfx_up', pitch)
+                    return true
+                end)
+            }))
+        end
+    end
+}
+

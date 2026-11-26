@@ -7,8 +7,8 @@ SMODS.Sound{
     path = "xamp.ogg",
 }
 SMODS.Sound{
-    key = "sfx_chult",
-    path = "chult.ogg",
+    key = "sfx_up",
+    path = "snd_snap.wav",
 }
 SMODS.Gradient {
     key = 'amp',
@@ -41,23 +41,29 @@ SMODS.Scoring_Parameter({
     colour = param_colour,
     juice_on_update = true,
     calculation_keys = {'amp', 'xamp'},
-        calc_effect = function(self, effect, scored_card, key, amount, from_edition)
-            if not SMODS.Calculation_Controls.chips then return end
-            if key == 'amp' and amount then
-                if effect.card and effect.card ~= scored_card then juice_card(effect.card) end
-                self:modify(amount)
-                card_eval_status_text(scored_card, 'extra', nil, percent, nil,
-                    {sound = "ele_sfx_amp", message = localize{type = 'variable', key = amount > 0 and 'a_chips' or 'a_chips_minus', vars = {amount..' Tax'}}, colour = self.colour})
-                return true
-            end
-            if key == 'xamp' and amount then
-                if effect.card and effect.card ~= scored_card then juice_card(effect.card) end
-                self:modify(self.current * (amount) - self.current)
-                card_eval_status_text(scored_card, 'extra', nil, percent, nil,
-                    {sound = "ele_sfx_xamp", message = localize{type = 'variable', key = amount > 1 and 'a_chips' or 'a_chips_minus', vars = {'X'..amount..' Amp'}}, colour = self.colour})
-                return true
-            end
+    calc_effect = function(self, effect, scored_card, key, amount, from_edition)
+        if not SMODS.Calculation_Controls.chips then return end
+        if key == 'amp' and amount ~= 0 then
+            if effect.card and effect.card ~= scored_card then juice_card(effect.card) end
+            self:modify(amount)
+            card_eval_status_text(scored_card, 'extra', nil, percent, nil,
+                {sound = "ele_sfx_amp", message = localize{type = 'variable', key = amount > 0 and 'a_chips' or 'a_chips_minus', vars = {amount..' Tax'}}, colour = self.colour})
+            return true
         end
+        if key == 'xamp' and amount ~= 1 then
+            if effect.card and effect.card ~= scored_card then juice_card(effect.card) end
+            self:modify(self.current * (amount) - self.current)
+            card_eval_status_text(scored_card, 'extra', nil, percent, nil,
+                {sound = "ele_sfx_xamp", message = localize{type = 'variable', key = amount > 1 and 'a_chips' or 'a_chips_minus', vars = {'X'..amount..' Amp'}}, colour = self.colour})
+            return true
+        end
+    end,
+	modify = function(self, amount)
+		if amount == 0 then return end
+		G.GAME.ele_amp = G.GAME.ele_amp or 1
+        G.GAME.ele_amp = G.GAME.ele_amp + amount
+		self.current = G.GAME.ele_amp
+	end,
 })
 SMODS.Scoring_Parameter({
     key = 'diviser',
@@ -275,7 +281,18 @@ SMODS.Scoring_Calculation{
 local start_run_ref = Game.start_run
 function Game:start_run(args)
     local ret = start_run_ref(self, args)
-    SMODS.set_scoring_calculation("ele_amp")
+    -- Only reset Tax when starting a NEW run
+    if not args or not args.savetext then
+        SMODS.set_scoring_calculation("ele_amp")
+        local tax = SMODS.Scoring_Parameters.ele_amp
+
+        tax.default_value = 1
+        tax.current = tax.default_value
+
+        update_hand_text({delay = 0}, {
+            [tax.key] = tax.current
+        })
+    end
     return ret
 end
 
