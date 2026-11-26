@@ -199,7 +199,7 @@ SMODS.Back {
         if G.GAME.selected_sleeve == "sleeve_ele_ultraviolet" then return end
         if context.final_scoring_step then
             local tax = SMODS.Scoring_Parameters.ele_amp
-            tax.default_value = tax.default_value + self.config.extra.base_tax
+            tax.default_value = tax.default_value * self.config.extra.base_tax
             tax.current = tax.default_value
             update_hand_text({delay = 0}, {
                 [tax.key] = tax.current
