@@ -421,7 +421,7 @@ CardSleeves.Sleeve {
         end
     end,
     apply = function(self, back)
-        if self.get_current_deck_key() == "b_ele_ultraviolet" then
+        if self.get_current_deck_key() ~= "b_ele_ultraviolet" then
         G.E_MANAGER:add_event(Event({
                 func = function()
                     local pool = {}
