@@ -361,7 +361,7 @@ CardSleeves.Sleeve {
     key = "ultraviolet",
     atlas = "sleeves",
     pos = { x = 4 , y = 0 },
-    config = { extra = { cards = 8, base_tax = 0.4, base_tax_down = 0.8, low_factor = 1.5 } },
+    config = { extra = { cards = 8, base_tax = 0.4, base_tax_down = 0.5, low_factor = 1.5 } },
     loc_vars = function(self)
         local key
         if self.get_current_deck_key() == "b_ele_ultraviolet" then

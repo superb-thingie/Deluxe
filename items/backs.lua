@@ -191,7 +191,7 @@ SMODS.Back {
     key = "ultraviolet",
     atlas = "backs",
     pos = { x = 2, y = 0 },
-    config = { extra = { cards = 8, base_tax = 0.4, base_tax_down = 0.8 } },
+    config = { extra = { cards = 8, base_tax = 0.4, base_tax_down = 0.5 } },
     loc_vars = function(self)
         return { vars = { self.config.extra.cards, self.config.extra.base_tax, self.config.extra.base_tax_down } }
     end,
