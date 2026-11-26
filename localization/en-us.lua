@@ -441,6 +441,14 @@ return {
                     "Score requirement scales {C:dark_edition}linearly",
                 },
             },
+            b_ele_ultraviolet = {
+                name = "Utraviolet Deck",
+                text = {
+                    "{C:ele_amp}+0.5{} base tax when hand is played",
+                    "{C:ele_attenuator}Attenuators{} give {X:ele_amp,C:white}X0.8{} base tax when played",
+                    "{C:attention}4{} random cards start as {C:ele_attenuator}Attenuators{}",
+                },
+            },
         },
         Sleeve = {
             sleeve_ele_lightning = {
