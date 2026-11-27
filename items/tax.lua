@@ -58,12 +58,6 @@ SMODS.Scoring_Parameter({
             return true
         end
     end,
-	modify = function(self, amount)
-		if amount == 0 then return end
-		G.GAME.ele_amp = G.GAME.ele_amp or 1
-        G.GAME.ele_amp = G.GAME.ele_amp + amount
-		self.current = G.GAME.ele_amp
-	end,
 })
 SMODS.Scoring_Parameter({
     key = 'diviser',
@@ -285,10 +279,8 @@ function Game:start_run(args)
     if not args or not args.savetext then
         SMODS.set_scoring_calculation("ele_amp")
         local tax = SMODS.Scoring_Parameters.ele_amp
-
         tax.default_value = 1
         tax.current = tax.default_value
-
         update_hand_text({delay = 0}, {
             [tax.key] = tax.current
         })

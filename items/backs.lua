@@ -191,28 +191,12 @@ SMODS.Back {
     key = "ultraviolet",
     atlas = "backs",
     pos = { x = 2, y = 0 },
-    config = { extra = { cards = 8, base_tax = 1.3, base_tax_down = 0.9 } },
+    config = { extra = { cards = 10, base_tax = 1.5, base_tax_down = 0.8 } },
     loc_vars = function(self)
         return { vars = { self.config.extra.cards, self.config.extra.base_tax, self.config.extra.base_tax_down } }
     end,
     calculate = function(self, back, context)
         if G.GAME.selected_sleeve == "sleeve_ele_ultraviolet" then return end
-        if context.final_scoring_step then
-            local tax = SMODS.Scoring_Parameters.ele_amp
-            tax.default_value = tax.default_value * self.config.extra.base_tax
-            tax.current = tax.default_value
-            update_hand_text({delay = 0}, {
-                [tax.key] = tax.current
-            })
-            G.E_MANAGER:add_event(Event({
-                trigger = 'after',
-                func = (function()
-                    play_sound('ele_sfx_amp')
-                    return true
-                end)
-            }))
-            G.GAME.ultraviolet_pitch_count = 0
-        end
         if context.individual and context.cardarea == G.play and (
             SMODS.has_enhancement(context.other_card, 'm_ele_opposite') or
             SMODS.has_enhancement(context.other_card, 'm_ele_invert') or
@@ -226,8 +210,9 @@ SMODS.Back {
             G.GAME.ultraviolet_pitch_count =
                 (G.GAME.ultraviolet_pitch_count or 0) + 0.2
             local tax = SMODS.Scoring_Parameters.ele_amp
+            local extra_tax = tax.current - tax.default_value
+            tax.current = (tax.default_value * self.config.extra.base_tax_down) + extra_tax
             tax.default_value = tax.default_value * self.config.extra.base_tax_down
-            tax.current = tax.default_value
             update_hand_text({delay = 0}, {
                 [tax.key] = tax.current
             }) 
@@ -242,36 +227,64 @@ SMODS.Back {
                 end)
             }))
         end
+        if context.final_scoring_step then
+            local tax = SMODS.Scoring_Parameters.ele_amp
+            tax.default_value = tax.default_value * self.config.extra.base_tax
+            update_hand_text({delay = 0}, {
+                [tax.key] = tax.current
+            })
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                func = (function()
+                    play_sound('ele_sfx_amp')
+                    local deck_card = G.deck.cards[1] or G.deck
+                    attention_text({
+                        text = "X1.25 Base Tax",
+                        scale = 0.7,
+                        hold = 1.4,
+                        backdrop_colour = SMODS.Gradients.ele_amp,
+                        align = "tm",
+                        major = deck_card,
+                        offset = { x = 0, y = -0.05 * G.CARD_H },
+                    })
+                    if deck_card and deck_card.juice_up then
+                        deck_card:juice_up(0.6, 0.1)
+                    end
+                    return true
+                end)
+            }))
+            G.GAME.ultraviolet_pitch_count = 0
+        end
     end,
-apply = function(self, back)
-    G.E_MANAGER:add_event(Event({
-        func = function()
-            local pool = {}
-            for _, card in ipairs(G.playing_cards) do
-                pool[#pool + 1] = card
-            end
-            for i = 1, math.min(self.config.extra.cards, #pool) do
-                local selected = pseudorandom_element(pool, pseudoseed('ultraviolet' .. i))
-                local attenuator = SMODS.poll_enhancement {
-                    key = "ele_utraviolet",
-                    guaranteed = true,
-                    options = {
-                        'm_ele_opposite', 'm_ele_invert', 'm_ele_lead',
-                        'm_ele_radio', 'm_ele_mag', 'm_ele_corrupt',
-                        'm_ele_fragile',
+    apply = function(self, back)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                local pool = {}
+                for _, card in ipairs(G.playing_cards) do
+                    pool[#pool + 1] = card
+                end
+                for i = 1, math.min(self.config.extra.cards, #pool) do
+                    local selected = pseudorandom_element(pool, pseudoseed('ultraviolet' .. i))
+                    local attenuator = SMODS.poll_enhancement {
+                        key = "ele_utraviolet",
+                        guaranteed = true,
+                        options = {
+                            'm_ele_opposite', 'm_ele_invert', 'm_ele_lead',
+                            'm_ele_radio', 'm_ele_mag', 'm_ele_corrupt',
+                            'm_ele_fragile',
+                        }
                     }
-                }
-                selected:set_ability(attenuator, nil, nil)
-                for j, card in ipairs(pool) do
-                    if card == selected then
-                        table.remove(pool, j)
-                        break
+                    selected:set_ability(attenuator, nil, nil)
+                    for j, card in ipairs(pool) do
+                        if card == selected then
+                            table.remove(pool, j)
+                            break
+                        end
                     end
                 end
+                return true
             end
-            return true
-        end
-    }))
-end
+        }))
+    end
 }
 

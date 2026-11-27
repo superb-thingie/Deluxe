@@ -237,84 +237,165 @@ CardSleeves.Sleeve {
                     }))
                 end
             end
-        end
-        if context.repetition and context.cardarea == G.play then
-            if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_dupe, "Critical Deck") then return end
-            if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck") then
-                return {
-                    repetitions = self.config.extra.repetitions
-                },
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'immediate',
-                    func = function()
-                        G.crit_particles = Particles(1, 1, 0, 0, {
-                            timer = 0.015,
-                            scale = 0.3,
-                            initialize = true,
-                            lifespan = 1,
-                            speed = 1.1,
-                            padding = -1,
-                            attach = G.ROOM_ATTACH,
-                            colours = {
-                                G.C.WHITE,
-                                G.C.GOLD,
-                                G.C.DARK_EDITION,
-                            },
-                            fill = true
-                        })
-                        G.crit_particles.fade_alpha = 1
-                        G.crit_particles:fade(0.2, 0)
-                        return true
-                    end
-                })),
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    func = (function()
-                        local text = localize('crit')
-                            play_sound('multhit2', 0.7)
-                            play_sound('tarot1')
-                            attention_text({
-                                scale = 1.4, text = text, hold = 2, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
+            if context.repetition and context.cardarea == G.play then
+                if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_dupe, "Critical Deck") then return end
+                if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck") then
+                    return {
+                        repetitions = self.config.extra.repetitions
+                    },
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'immediate',
+                        func = function()
+                            G.crit_particles = Particles(1, 1, 0, 0, {
+                                timer = 0.015,
+                                scale = 0.3,
+                                initialize = true,
+                                lifespan = 1,
+                                speed = 1.1,
+                                padding = -1,
+                                attach = G.ROOM_ATTACH,
+                                colours = {
+                                    G.C.WHITE,
+                                    G.C.GOLD,
+                                    G.C.DARK_EDITION,
+                                },
+                                fill = true
                             })
-                        return true
-                    end)
-                })),
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 1,
-                    func = function()
-                        G.crit_particles:fade(0.5)
-                        return true
-                    end
-                })),
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 1,
-                    func = function()
-                        G.crit_particles:remove()
-                        G.crit_particles = nil
-                        return true
-                    end
-                }))
+                            G.crit_particles.fade_alpha = 1
+                            G.crit_particles:fade(0.2, 0)
+                            return true
+                        end
+                    })),
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        func = (function()
+                            local text = localize('crit')
+                                play_sound('multhit2', 0.7)
+                                play_sound('tarot1')
+                                attention_text({
+                                    scale = 1.4, text = text, hold = 2, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
+                                })
+                            return true
+                        end)
+                    })),
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        delay = 1,
+                        func = function()
+                            G.crit_particles:fade(0.5)
+                            return true
+                        end
+                    })),
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        delay = 1,
+                        func = function()
+                            G.crit_particles:remove()
+                            G.crit_particles = nil
+                            return true
+                        end
+                    }))
+                end
+            end
+            if context.individual and context.cardarea == G.play then
+                if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_dupe, "Critical Deck") then return end
+                if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck") then return end
+                if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_fail, "Critical Deck") then
+                    return {
+                        amp = self.config.extra.amp
+                    },
+                    G.E_MANAGER:add_event(Event({
+                        func = (function()
+                            local text = localize('fail')
+                                play_sound('tarot1')
+                                attention_text({
+                                    scale = 1.4, text = text, hold = 2, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
+                                })
+                            return true
+                        end)
+                    }))
+                end
             end
         end
-        if context.individual and context.cardarea == G.play then
-            if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_dupe, "Critical Deck") then return end
-            if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck") then return end
-            if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_fail, "Critical Deck") then
-                return {
-                    amp = self.config.extra.amp
-                },
-                G.E_MANAGER:add_event(Event({
-                    func = (function()
-                        local text = localize('fail')
-                            play_sound('tarot1')
-                            attention_text({
-                                scale = 1.4, text = text, hold = 2, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
+        if self.get_current_deck_key() ~= "b_ele_crit" then
+            if context.repetition and context.cardarea == G.play then
+                if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_dupe, "Critical Deck") then return end
+                if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck") then
+                    return {
+                        repetitions = self.config.extra.repetitions
+                    },
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'immediate',
+                        func = function()
+                            G.crit_particles = Particles(1, 1, 0, 0, {
+                                timer = 0.015,
+                                scale = 0.3,
+                                initialize = true,
+                                lifespan = 1,
+                                speed = 1.1,
+                                padding = -1,
+                                attach = G.ROOM_ATTACH,
+                                colours = {
+                                    G.C.WHITE,
+                                    G.C.GOLD,
+                                    G.C.DARK_EDITION,
+                                },
+                                fill = true
                             })
-                        return true
-                    end)
-                }))
+                            G.crit_particles.fade_alpha = 1
+                            G.crit_particles:fade(0.2, 0)
+                            return true
+                        end
+                    })),
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        func = (function()
+                            local text = localize('crit')
+                                play_sound('multhit2', 0.7)
+                                play_sound('tarot1')
+                                attention_text({
+                                    scale = 1.4, text = text, hold = 2, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
+                                })
+                            return true
+                        end)
+                    })),
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        delay = 1,
+                        func = function()
+                            G.crit_particles:fade(0.5)
+                            return true
+                        end
+                    })),
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        delay = 1,
+                        func = function()
+                            G.crit_particles:remove()
+                            G.crit_particles = nil
+                            return true
+                        end
+                    }))
+                end
+            end
+            if context.individual and context.cardarea == G.play then
+                if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_dupe, "Critical Deck") then return end
+                if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_chance, "Critical Deck") then return end
+                if SMODS.pseudorandom_probability(self, "ele_crit", 1, self.config.extra.crit_fail, "Critical Deck") then
+                    return {
+                        amp = self.config.extra.amp
+                    },
+                    G.E_MANAGER:add_event(Event({
+                        func = (function()
+                            local text = localize('fail')
+                                play_sound('tarot1')
+                                attention_text({
+                                    scale = 1.4, text = text, hold = 2, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
+                                })
+                            return true
+                        end)
+                    }))
+                end
             end
         end
     end
@@ -361,7 +442,7 @@ CardSleeves.Sleeve {
     key = "ultraviolet",
     atlas = "sleeves",
     pos = { x = 4 , y = 0 },
-    config = { extra = { cards = 8, base_tax = 1.3, base_tax_down = 0.9, low_factor = 1.5 } },
+    config = { extra = { cards = 10, base_tax = 1.3, base_tax_down = 0.75, low_factor = 1.5 } },
     loc_vars = function(self)
         local key
         if self.get_current_deck_key() == "b_ele_ultraviolet" then
@@ -373,22 +454,6 @@ CardSleeves.Sleeve {
     end,
     calculate = function(self, back, context)
         if self.get_current_deck_key() == "b_ele_ultraviolet" then
-            if context.final_scoring_step then
-                local tax = SMODS.Scoring_Parameters.ele_amp
-                tax.default_value = tax.default_value *  self.config.extra.base_tax / self.config.extra.low_factor 
-                tax.current = tax.default_value
-                update_hand_text({delay = 0}, {
-                    [tax.key] = tax.current
-                })
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    func = (function()
-                        play_sound('ele_sfx_amp')
-                        return true
-                    end)
-                }))
-                G.GAME.ultraviolet_pitch_count = 0
-            end
             if context.individual and context.cardarea == G.play and (
                 SMODS.has_enhancement(context.other_card, 'm_ele_opposite') or
                 SMODS.has_enhancement(context.other_card, 'm_ele_invert') or
@@ -402,8 +467,9 @@ CardSleeves.Sleeve {
                 G.GAME.ultraviolet_pitch_count =
                     (G.GAME.ultraviolet_pitch_count or 0) + 0.2
                 local tax = SMODS.Scoring_Parameters.ele_amp
+                local extra_tax = tax.current - tax.default_value
+                tax.current = (tax.default_value * self.config.extra.base_tax_down) + extra_tax
                 tax.default_value = tax.default_value * self.config.extra.base_tax_down
-                tax.current = tax.default_value
                 update_hand_text({delay = 0}, {
                     [tax.key] = tax.current
                 }) 
@@ -417,25 +483,37 @@ CardSleeves.Sleeve {
                         return true
                     end)
                 }))
+            end
+            if context.final_scoring_step then
+                local tax = SMODS.Scoring_Parameters.ele_amp
+                tax.default_value = tax.default_value * self.config.extra.base_tax / self.config.extra.low_factor
+                update_hand_text({delay = 0}, {
+                    [tax.key] = tax.current
+                })
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    func = (function()
+                        play_sound('ele_sfx_amp')
+                        local deck_card = G.deck.cards[1] or G.deck
+                        attention_text({
+                            text = "X1.25 Base Tax",
+                            scale = 0.7,
+                            hold = 1.4,
+                            backdrop_colour = SMODS.Gradients.ele_amp,
+                            align = "tm",
+                            major = deck_card,
+                            offset = { x = 0, y = -0.05 * G.CARD_H },
+                        })
+                        if deck_card and deck_card.juice_up then
+                            deck_card:juice_up(0.6, 0.1)
+                        end
+                        return true
+                    end)
+                }))
+                G.GAME.ultraviolet_pitch_count = 0
             end
         end
         if self.get_current_deck_key() ~= "b_ele_ultraviolet" then
-            if context.final_scoring_step then
-                local tax = SMODS.Scoring_Parameters.ele_amp
-                tax.default_value = tax.default_value + ( self.config.extra.base_tax * self.config.extra.low_factor )
-                tax.current = tax.default_value
-                update_hand_text({delay = 0}, {
-                    [tax.key] = tax.current
-                })
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    func = (function()
-                        play_sound('ele_sfx_amp')
-                        return true
-                    end)
-                }))
-                G.GAME.ultraviolet_pitch_count = 0
-            end
             if context.individual and context.cardarea == G.play and (
                 SMODS.has_enhancement(context.other_card, 'm_ele_opposite') or
                 SMODS.has_enhancement(context.other_card, 'm_ele_invert') or
@@ -449,8 +527,9 @@ CardSleeves.Sleeve {
                 G.GAME.ultraviolet_pitch_count =
                     (G.GAME.ultraviolet_pitch_count or 0) + 0.2
                 local tax = SMODS.Scoring_Parameters.ele_amp
+                local extra_tax = tax.current - tax.default_value
+                tax.current = (tax.default_value * self.config.extra.base_tax_down) + extra_tax
                 tax.default_value = tax.default_value * self.config.extra.base_tax_down
-                tax.current = tax.default_value
                 update_hand_text({delay = 0}, {
                     [tax.key] = tax.current
                 }) 
@@ -464,6 +543,34 @@ CardSleeves.Sleeve {
                         return true
                     end)
                 }))
+            end
+            if context.final_scoring_step then
+                local tax = SMODS.Scoring_Parameters.ele_amp
+                tax.default_value = tax.default_value * self.config.extra.base_tax
+                update_hand_text({delay = 0}, {
+                    [tax.key] = tax.current
+                })
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    func = (function()
+                        play_sound('ele_sfx_amp')
+                        local deck_card = G.deck.cards[1] or G.deck
+                        attention_text({
+                            text = "X1.25 Base Tax",
+                            scale = 0.7,
+                            hold = 1.4,
+                            backdrop_colour = SMODS.Gradients.ele_amp,
+                            align = "tm",
+                            major = deck_card,
+                            offset = { x = 0, y = -0.05 * G.CARD_H },
+                        })
+                        if deck_card and deck_card.juice_up then
+                            deck_card:juice_up(0.6, 0.1)
+                        end
+                        return true
+                    end)
+                }))
+                G.GAME.ultraviolet_pitch_count = 0
             end
         end
     end,
