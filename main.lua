@@ -54,8 +54,6 @@ assert(SMODS.load_file("items/tarots.lua"))()
 assert(SMODS.load_file("items/spectrals.lua"))()
 assert(SMODS.load_file("items/jokers.lua"))()
 assert(SMODS.load_file("items/blinds.lua"))()
-assert(SMODS.load_file("items/poker_hands.lua"))()
-assert(SMODS.load_file("items/planets.lua"))()
 assert(SMODS.load_file("items/tags.lua"))()
 assert(SMODS.load_file("crossmod/boss.lua"))()
 
@@ -65,9 +63,10 @@ end
 if next(SMODS.find_mod("Maximus")) then
     assert(SMODS.load_file("crossmod/maximus.lua"))()
 end
-if next(SMODS.find_mod("Oblivion")) then
-    assert(SMODS.load_file("crossmod/oblivion.lua"))()
+if next(SMODS.find_mod("abandonia")) then
+    assert(SMODS.load_file("crossmod/abandonia.lua"))()
 end
+
 
 local linear_ante_scaling = get_blind_amount
 get_blind_amount = function(ante)
